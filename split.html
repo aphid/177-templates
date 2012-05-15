@@ -1,10 +1,17 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Streets</title>
+<title>Split</title>
 <style type="text/css">
-#container { position: absolute; width: 100%; height: 100%; min-height: 700px; }
-body { background: #333; }
+body { background: white; font-family: sans-serif; color: #888; margin: 0;}
+video { width: 500px; }
+header { font-size: 64pt; padding: 20px;} 
+#main { position: relative; margin-top: 75px; padding-left: 200px; }
+#side { position: absolute; top 0; right: 0; width: 300px; height: 100%; background: #aaa; }
+#annotation { font-size: 1.5em; }
+.plugin { color: black;  }
+#wikipedia { height: 300px; overflow-y: scroll; border: 1px solid #999; padding: 5px;}
+#image { margin-top: 15px; padding: 8px; } 
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="http://cdn.popcornjs.org/code/dist/popcorn-complete.min.js"></script>
@@ -12,22 +19,43 @@ body { background: #333; }
 $(document).ready(function () {
      var p = Popcorn( "#video" );
      p.footnote({
-       start: 5,
+       start: 1,
        end: 15,
-       text: 'This text will appear in "target". ',
-       target: "map"
+       text: 'an annotation...',
+       target: "annotation"
      });
-     p.googlemap({
-       start: 6,
+     
+     p.footnote({
+       start: 16,
+       end: 40,
+       text: 'another annotation...',
+       target: "annotation"
+     });
+
+    p.image({
+        start: 1,
+        end: 40,
+        target: 'image',
+        src: 'http://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Combination_of_October_2011_global_protests.jpg/260px-Combination_of_October_2011_global_protests.jpg'
+    });
+
+    p.wikipedia({
+       start: 1,
        end: 25,
-       type: "STREETVIEW",
-       target: "map",
-       lat: 43.665429,
-       lng: -79.403323
+       title: "UC Davis Pepper-spray incident",
+       src: "http://en.wikipedia.org/wiki/UC_Davis_pepper-spray_incident",
+       target: "wikipedia",
+     });
+   p.wikipedia({
+       start: 26,
+       end: 41,
+       title: "Linda P.B. Katehi",
+       src: "http://en.wikipedia.org/wiki/Linda_P.B._Katehi#2011_Occupy_protest",
+       target: "wikipedia",
      });
      console.log(p.duration());
     p.cue(10, function(){
-    this.pause();
+    //this.pause();
     });
     p.play();
     
@@ -37,16 +65,18 @@ $(document).ready(function () {
 });
 </script>
 </head>
-<body>
-<header>A video...</header>
-<section id="main">
-<video id="video" src="http://metaviddemo01.ucsc.edu/rashomon/media/2012-05-07_14-31-23_777.webm" controls> </video><h3 id="title">A video about something</h3>
-<div id="annotation"> </div>
-</section>
-<section id="side"> 
-<div id="twitter"></div>
-<div id="wikipedia"></div>
+<body><section id="side">&nbsp;
+<div id="wikipedia" class="plugin"></div>
+<div id="image" class="plugin"> </div>
 
 </section>
+
+<header>A title...</header>
+<section id="main">
+<video id="video"" controls><source src="min-height: 700px"> <source src="http://metaviddemo01.ucsc.edu/rashomon/media/Occupy_Wall_Street_Cops_Pepper_Spray_UC_Davis_Protesters-MYQqiyR2THs.webm"><source src="http://metaviddemo01.ucsc.edu/rashomon/media/Occupy_Wall_Street_Cops_Pepper_Spray_UC_Davis_Protesters-MYQqiyR2THs.mp4"> </video><h3 id="title">A description...</h3>
+<div id="annotation"> </div>
+</section>
+
+
 </body>
 </html>
