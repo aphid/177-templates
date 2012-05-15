@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Streets</title>
+<style type="text/css">
+#map { width: 600px; height: 400px; }
+body { background: #333; }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://cdn.popcornjs.org/code/dist/popcorn-complete.min.js"></script>
+<script>
+console.log("wtf");
+$(document).ready(function () {
+    console.log("rlly");
+     var p = Popcorn( "#video" );
+     p.footnote({
+       start: 5,
+       end: 15,
+       text: 'This text will appear in "target". ',
+       target: "map"
+     });
+     p.googlemap({
+       start: 16,
+       end: 25,
+       type: "STREETVIEW",
+       target: "map",
+       lat: 43.665429,
+       lng: -79.403323
+     });
+     console.log(p.duration());
+    p.cue(20, function(){
+    this.pause();
+    });
+    p.play();
+    
+
+
+    
+});
+
+
+
+
+</script>
+</head>
+
+</script>
+
+</head>
+
+<body>
+
+<video id="video" src="http://metaviddemo01.ucsc.edu/rashomon/media/2012-05-07_14-31-23_777.webm" controls> </video>
+<div id="map"> </div>
+</body>
+</html>
