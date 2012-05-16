@@ -69,10 +69,41 @@ body { margin: 0; background-color: #000;}
 
    // ensure the web page (DOM) has loaded
 $(document).ready(function () {
+    //make popcorn object for main video
 	var pop = Popcorn("#background");
+	//play it
 	pop.play();
 	
-	//this prevents videos from staying on the screen if a user figures out how to play the main video with context menu/controls.
+
+
+	//example inset video call, repeat as needed
+    pop.cue(5, function(){
+        var url = {};
+        url.ogv = "http://archive.org/download/HowDr.KingAndRosaParksInspiredFolkLegendPeteSeeger/How20Dr.20King20and20Rosa20Parks20Inspired20Folk20Legend20Pete20Seeger.ogv";
+        //define url.mp4 and //url.webm are good too, if they exist.
+        makeInset(url);
+    });  //end of inset video call
+	
+	pop.cue(10, function(){
+        var url = {};
+        url.webm = "http://metaviddemo01.ucsc.edu/rashomon/media/2012-05-07-14-32-53_319.webm";
+        //define url.mp4 and //url.webm are good too, if they exist.
+        makeInset(url);
+    });  //end of inset video call
+	
+	
+	
+	
+    //example footnote, repeat as needed
+    pop.footnote({
+           start: 16,
+           end: 40,
+           text: 'Some text goes here',
+           target: "annotation"
+         });  //end of footnote
+         
+         
+	//this event listener prevents videos from staying on the screen if a user figures out how to play the main video with context menu/controls.
 	pop.on("playing", function () {
         if ($("#inset").length)
         {
@@ -80,35 +111,9 @@ $(document).ready(function () {
         $("#vidholder").hide();
         
         }
-    });
-
-	//this stops the main video and plays a video at the url(s) provided at the time provided
-    pop.cue(5, function(){
-        var url = {};
-        url.ogv = "http://archive.org/download/HowDr.KingAndRosaParksInspiredFolkLegendPeteSeeger/How20Dr.20King20and20Rosa20Parks20Inspired20Folk20Legend20Pete20Seeger.ogv";
-        //define url.mp4 and //url.webm are good too, if they exist.
-        makeInset(url);
-    });
+    });  //end of listener
 	
-	pop.cue(10, function(){
-        var url = {};
-        url.webm = "http://metaviddemo01.ucsc.edu/rashomon/media/2012-05-07-14-32-53_319.webm";
-        //define url.mp4 and //url.webm are good too, if they exist.
-        makeInset(url);
-    });
-	
-	
-	
-	
-    //footnote a
-    pop.footnote({
-           start: 16,
-           end: 40,
-           text: 'Some text goes here',
-           target: "annotation"
-         });
-	
-});
+}); // end of document ready
 
 
 
