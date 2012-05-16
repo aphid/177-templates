@@ -12,14 +12,24 @@ video { position: fixed; top: 25px; right: 15px; z-index: 999 }
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="http://cdn.popcornjs.org/code/dist/popcorn-complete.min.js"></script>
 <script>
+
+//make sure DOM is ready
 $(document).ready(function () {
+    //make a popcorn object
      var p = Popcorn( "#video" );
+     
+     //play video
+     p.play();
+
+     //example footnote, repeat as needed
      p.footnote({
        start: 5,
        end: 15,
        text: 'This text will appear in "target". ',
        target: "text"
-     });
+     }); // end footnote
+     
+    //example street view map 
     p.googlemap({
         start: 6,
         end: 25,
@@ -27,8 +37,9 @@ $(document).ready(function () {
         target: "map",
         lat: '37.835802',
         lng: '-122.26928900000001'
-     });
+     }); // end map
      
+     //second map with more attributes
      p.googlemap({
         start: 25,
         end: 40,
@@ -40,14 +51,14 @@ $(document).ready(function () {
         location: '5700 Martin Luther King Jr. Way Oakland CA',
         heading: '94.5',
         pitch: '-7.8'
-     });
+     }); //end map
+     
      console.log(p.duration());
 
-     
+    //make video pause at 10 seconds 
     p.cue(10, function(){
-    this.pause();
+        this.pause();
     });
-    p.play();
     
 
 

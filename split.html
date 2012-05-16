@@ -16,53 +16,60 @@ header { font-size: 64pt; padding: 20px;}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="http://cdn.popcornjs.org/code/dist/popcorn-complete.min.js"></script>
 <script>
+
+//make sure DOM is loaded
 $(document).ready(function () {
+
+     //make popcorn object
      var p = Popcorn( "#video" );
+     p.play();
+     //example footnote
      p.footnote({
        start: 1,
        end: 15,
        text: 'an annotation...',
        target: "annotation"
-     });
+     }); //end footnote
      
      p.footnote({
        start: 16,
        end: 40,
        text: 'another annotation...',
        target: "annotation"
-     });
+     }); //end footnote
 
+    //example image
     p.image({
         start: 1,
         end: 40,
         target: 'image',
         src: 'http://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Combination_of_October_2011_global_protests.jpg/260px-Combination_of_October_2011_global_protests.jpg'
-    });
+    });  //end image
 
+
+    //example wikipedia entry NOTE REQUIRES RUNNING FROM ACTUAL SERVER DUE TO JSONP STUFF
     p.wikipedia({
        start: 1,
        end: 25,
        title: "UC Davis Pepper-spray incident",
        src: "http://en.wikipedia.org/wiki/UC_Davis_pepper-spray_incident",
        target: "wikipedia",
-     });
+     }); //end wikipedia
+   
+   //another wikipedia  
    p.wikipedia({
        start: 26,
        end: 41,
        title: "Linda P.B. Katehi",
        src: "http://en.wikipedia.org/wiki/Linda_P.B._Katehi#2011_Occupy_protest",
        target: "wikipedia",
-     });
-     console.log(p.duration());
-    p.cue(10, function(){
-    //this.pause();
-    });
-    p.play();
-    
+     }); //end wikpedia
 
-
-    
 });
+    
+
+
+   
 </script>
 </head>
 <body><section id="side">&nbsp;
