@@ -1,0 +1,154 @@
+<!DOCTYPE HTML>
+<head>
+<title>fullscreen template</title>
+
+<style type="text/css">
+body { margin: 0; background-color: #000;}
+#content { position: absolute; top 0; left 0; border: 0; margin: 0; width: 100%; height: 100%}
+
+
+#background { position: absolute; top 0; left: 0; margin: 0; width: 100%; }
+
+#inset { width: 100%; }
+
+#vidholder {
+  display: none;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 50;
+  color: white;
+  background: transparent;
+  font-size: 48pt;
+  width: 25%;
+
+}
+
+#theX {
+  cursor: pointer;
+  position: absolute;
+  right: -10px;
+  top: 1px;
+  color: white;
+  font-family: sans-serif;
+  font-size: 9pt;
+  padding: 1px;
+  background-color: rgba(0,0,0,0.5);
+  border-radius: 15px;
+}
+
+#mapholder {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 60;
+  color: white;
+  background: transparent;
+  font-size: 48pt;
+  width: 220px;
+  height: 140px;
+
+}
+
+#annotation {
+  position: absolute;
+  bottom: 70px;
+  left: 10px;
+  z-index: 60;
+  color: white;
+  background: rgba(0,0,0,0.5);
+  font-size: 48pt;
+  width: 100%;
+ 
+}
+</style>
+<script src="http://cdn.popcornjs.org/code/dist/popcorn-complete.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<script type="text/javascript">
+
+
+   // ensure the web page (DOM) has loaded
+$(document).ready(function () {
+	var pop = Popcorn("#background");
+	pop.play();
+	
+	//this prevents videos from staying on the screen if a user figures out how to play the main video with context menu/controls.
+	pop.on("playing", function () {
+        if ($("#inset").length)
+        {
+        $("#inset").remove();
+        $("#vidholder").hide();
+        
+        }
+    });
+
+	//this stops the main video and plays a video at the url(s) provided at the time provided
+    pop.cue(5, function(){
+        var url = {};
+        url.ogv = "http://archive.org/download/HowDr.KingAndRosaParksInspiredFolkLegendPeteSeeger/How20Dr.20King20and20Rosa20Parks20Inspired20Folk20Legend20Pete20Seeger.ogv";
+        //define url.mp4 and //url.webm are good too, if they exist.
+        makeInset(url);
+    });
+	
+    //footnote a
+    pop.footnote({
+           start: 16,
+           end: 40,
+           text: 'Some text goes here',
+           target: "annotation"
+         });
+	
+});
+
+
+
+function makeInset(urls){
+        //pause the main vid
+        Popcorn("#background").pause();
+        //make a video tag
+        var newVid = $("<video/>", { "id": "inset" });
+        //for each url, make a source within the video tag
+        $.each(urls, function(key, val){
+            $("<source/>", { "src" : val}).appendTo(newVid);
+        });
+        //put video/src into the container
+        newVid.appendTo("#vidholder");
+        //make a popcorn object for that video
+        var inset = Popcorn("#inset");
+        
+        //when video ends, remove the video tag, play main, and hide the holder
+        inset.listen("ended", function() {
+      		Popcorn("#background").play();
+      		newVid.remove();
+            $("#vidholder").hide();
+  		});
+  		//if 'x' is clicked, remove the video tag, play main, and hide the holder
+        $("#theX").click(function(){
+				Popcorn("#background").play();
+				newVid.remove();
+				$("#vidholder").hide();
+        });
+
+        //make vid container visible and play the video
+        $("#vidholder").fadeToggle('fast');
+        inset.play();
+
+
+
+}
+
+
+</script>
+</head>
+
+<div id="vidholder"> <div id="theX">x</div></div>
+<div id="mapholder"> </div>
+<div id="annotation"> </div>
+<div id="content">
+    <video src="http://archive.org/download/MediaGiraffeProjectBrewsterKahle/MGP002Kahle.ogv" id="background" controls>
+</div>
+
+
+</div>
+</body>
+</html>
