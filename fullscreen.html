@@ -67,93 +67,88 @@ body { margin: 0; background-color: #000;}
 <script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
 <script type="text/javascript">
 
-
-   // ensure the web page (DOM) has loaded
+// ensure the web page (DOM) has loaded
 $(document).ready(function () {
     //make popcorn object for main video
-	var pop = Popcorn("#background");
-	//play it
-	pop.play();
-	
+    var pop = Popcorn("#background");
+    //play it
+    pop.play();
 
 
-	//example inset video call, repeat as needed
-    pop.cue(5, function(){
+
+    //example inset video call, repeat as needed
+    pop.cue(5, function () {
         var url = {};
         url.ogv = "http://archive.org/download/HowDr.KingAndRosaParksInspiredFolkLegendPeteSeeger/How20Dr.20King20and20Rosa20Parks20Inspired20Folk20Legend20Pete20Seeger.ogv";
         //define url.mp4 and //url.webm are good too, if they exist.
         makeInset(url);
-    });  //end of inset video call
-	
-	pop.cue(10, function(){
+    }); //end of inset video call
+    pop.cue(10, function () {
         var url = {};
         url.webm = "http://metaviddemo01.ucsc.edu/rashomon/media/2012-05-07-14-32-53_319.webm";
         //define url.mp4 and //url.webm are good too, if they exist.
         makeInset(url);
-    });  //end of inset video call
-	
-	
-	
-	
+    }); //end of inset video call
+
+
+
     //example footnote, repeat as needed
     pop.footnote({
-           start: 16,
-           end: 40,
-           text: 'Some text goes here',
-           target: "annotation"
-         });  //end of footnote
-         
-         
-	//this event listener prevents videos from staying on the screen if a user figures out how to play the main video with context menu/controls.
-	pop.on("playing", function () {
-        if ($("#inset").length)
-        {
-        $("#inset").remove();
-        $("#vidholder").hide();
-        
+        start: 16,
+        end: 40,
+        text: 'Some text goes here',
+        target: "annotation"
+    }); //end of footnote
+
+    //this event listener prevents videos from staying on the screen if a user figures out how to play the main video with context menu/controls.
+    pop.on("playing", function () {
+        if ($("#inset").length) {
+            $("#inset").remove();
+            $("#vidholder").hide();
+
         }
-    });  //end of listener
-	
+    }); //end of listener
 }); // end of document ready
 
 
+function makeInset(urls) {
+    //pause the main vid
+    Popcorn("#background").pause();
+    //make a video tag
+    var newVid = $("<video/>", {
+        "id": "inset"
+    });
+    //for each url, make a source within the video tag
+    $.each(urls, function (key, val) {
+        $("<source/>", {
+            "src": val
+        }).appendTo(newVid);
+    });
+    //put video/src into the container
+    newVid.appendTo("#vidholder");
+    //make a popcorn object for that video
+    var inset = Popcorn("#inset");
 
-function makeInset(urls){
-        //pause the main vid
-        Popcorn("#background").pause();
-        //make a video tag
-        var newVid = $("<video/>", { "id": "inset" });
-        //for each url, make a source within the video tag
-        $.each(urls, function(key, val){
-            $("<source/>", { "src" : val}).appendTo(newVid);
-        });
-        //put video/src into the container
-        newVid.appendTo("#vidholder");
-        //make a popcorn object for that video
-        var inset = Popcorn("#inset");
-        
-        //when video ends, remove the video tag, play main, and hide the holder
-        inset.listen("ended", function() {
-      		Popcorn("#background").play();
-      		newVid.remove();
-            $("#vidholder").hide();
-  		});
-  		//if 'x' is clicked, remove the video tag, play main, and hide the holder
-        $("#theX").click(function(){
-				Popcorn("#background").play();
-				newVid.remove();
-				$("#vidholder").hide();
-        });
+    //when video ends, remove the video tag, play main, and hide the holder
+    inset.listen("ended", function () {
+        Popcorn("#background").play();
+        newVid.remove();
+        $("#vidholder").hide();
+    });
+    //if 'x' is clicked, remove the video tag, play main, and hide the holder
+    $("#theX").click(function () {
+        Popcorn("#background").play();
+        newVid.remove();
+        $("#vidholder").hide();
+    });
 
-        //make vid container visible and play the video
-        $("#vidholder").fadeToggle('fast');
-        inset.play();
+    //make vid container visible and play the video
+    $("#vidholder").fadeToggle('fast');
+    inset.play();
 
 
 
 }
-
-
 </script>
 </head>
 
