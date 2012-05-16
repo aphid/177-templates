@@ -58,7 +58,7 @@ body { margin: 0; background-color: #000;}
   color: white;
   background: rgba(0,0,0,0.5);
   font-size: 48pt;
-  width: 100%;
+  width: 80%;
  
 }
 </style>
@@ -89,6 +89,16 @@ $(document).ready(function () {
         //define url.mp4 and //url.webm are good too, if they exist.
         makeInset(url);
     });
+	
+	pop.cue(10, function(){
+        var url = {};
+        url.webm = "http://metaviddemo01.ucsc.edu/rashomon/media/2012-05-07-14-32-53_319.webm";
+        //define url.mp4 and //url.webm are good too, if they exist.
+        makeInset(url);
+    });
+	
+	
+	
 	
     //footnote a
     pop.footnote({
