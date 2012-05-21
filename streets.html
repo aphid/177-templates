@@ -4,68 +4,119 @@
 <title>Streets</title>
 <style type="text/css">
 #container { position: absolute; width: 100%; height: 100%; min-height: 500px; }
-#map { position: absolute; top: 0;  width: 100%; height: 100%; z-index: auto}
-#text { position: absolute; bottom: 100px; left: 15px; ; z-index: 998; background: rgba(0,0,0,0.3); color: white; padding: 0}
-body { background: #333; }
-video { position: fixed; top: 25px; right: 15px; z-index: 999 } 
+#full { position: absolute; top: 0;  width: 100%; height: 100%; z-index: auto; overflow: hidden; }
+#full img { width: 100%;  }
+#text { position: absolute; bottom: 100px; left: 15px; ; z-index: 998; background: rgba(0,0,0,0.3); color: white; padding: 0; font-size: 36pt;}
+#topright { position: absolute; top: 15px; right: 15px; ; z-index: 998; }
+body { background: #333; margin: 0; padding: 0; }
+#topright img { width: 250px; }
+#scloud { position: fixed; bottom: 5px; right: 5px; z-index: 999; height: 175px; width: 400px; } 
 </style>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script src="http://cdn.popcornjs.org/code/dist/popcorn-complete.min.js"></script>
+<script src="popcorn/popcorn.js"></script>
+<script src="popcorn/modules/player/popcorn.player.js"></script>
+<script src="popcorn/players/soundcloud/popcorn.soundcloud.js"></script>
+<script src="popcorn/plugins/googlemap/popcorn.googlemap.js"></script>
+<script src="popcorn/plugins/image/popcorn.image.js"></script>
+<script src="popcorn/plugins/footnote/popcorn.footnote.js"></script>
 <script>
+var p;
 //make sure DOM is ready
 $(document).ready(function () {
-    //make a popcorn object
-    var p = Popcorn("#video");
-
+    //make a popcorn object from a video
+    //var p = Popcorn("#video");
+    //nope, from a soundcloud!
+    var url = "http://soundcloud.com/ninja-tune/solid-steel-radio-show-18-5";
+    p = Popcorn.soundcloud( 'scloud', url );    
     //play video
-    p.play();
+    
+    p.on( "load", function() {
+        p.play();
+        p.currentTime(15);
+    });
 
-    //example footnote, repeat as needed
+
     p.footnote({
         start: 5,
         end: 15,
-        text: 'This text will appear in "target". ',
+        text: 'Hello World!',
         target: "text"
     }); // end footnote
-    //example street view map 
+    //example street view map
     p.googlemap({
-        start: 6,
-        end: 25,
+        start: 11,
+        end: 30,
         type: "STREETVIEW",
-        target: "map",
+        target: "full",
         lat: '37.835802',
         lng: '-122.26928900000001'
     }); // end map
     //second map with more attributes
     p.googlemap({
-        start: 25,
-        end: 40,
+        start: 40,
+        end: 145,
         type: "STREETVIEW",
-        target: "map",
+        target: "full",
         zoom: '1',
         lat: '37.8430375',
         lng: '-122.27036479999998',
         location: '5700 Martin Luther King Jr. Way Oakland CA',
         heading: '94.5',
         pitch: '-7.8'
-    }); //end map
-    console.log(p.duration());
+    });
 
-    //make video pause at 10 seconds 
-    p.cue(10, function () {
-        this.pause();
+
+    p.image({
+        start: 0,
+        end: 10,
+        src: "http://aphid.org/glitch.png",
+        target: "full"
+    
+    
+    
+    });
+
+
+    p.image({
+        start: 11,
+        end: 20,
+        src: "http://aphid.org/glitch.png",
+        target: "topright"
+    });
+
+    p.image({
+        start: 30,
+        end: 40,
+        src: 'http://fc07.deviantart.net/fs6/i/2005/017/3/5/Porter_Squiggle_by_kyle1852.jpg',
+        target: "full"
+    });
+
+    p.image({
+        start: 20,
+        end: 120,
+        src: "http://i.imgur.com/KGt3h.jpg",
+        target: "topright"
     });
 
 
 
 
-});</script>
+});
+
+</script>
 </head>
 <body>
+
+<div id="scloud" data-butter-soundcloud="http://soundcloud.com/huey-p-newton-project/huey"></div>
+
+
 <section id="container">
-<video id="video" src="http://archive.org/download/Destinat1956/Destinat1956.ogv" controls> </video>
-<div id="map"> </div>
+
+<div id="full"> </div>
 <div id="text"></div>
+<div id="topright"></div>
+
 </section>
 </body>
 </html>
